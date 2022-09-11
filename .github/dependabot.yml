@@ -5,9 +5,10 @@
 
 version: 2
 updates:
-  - package_manager: "javascript"
+  - package-ecosystem: "javascript"
     directory: "/"
-    update_schedule: "daily"
+    schedule:
+      interval: "daily"
     automerged_updates:
       - match:
         dependency_type: "all"
