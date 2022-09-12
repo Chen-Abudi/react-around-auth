@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
+
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -8,6 +10,12 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import RemovePlacePopup from "./RemovePlacePopup";
+
+import ProtectedRoute from "./ProtectedRoute";
+import Register from "./Register";
+import Login from "./Login";
+import InfoToolTip from "./InfoToolTip";
+
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 

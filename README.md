@@ -1,4 +1,4 @@
-# 🌎 React Around Auth.
+# 🌎 Project 14: Around the U.S Auth (React)
 
 ## [Check out React Around the U.S Project!](https://chen-abudi.github.io/around-react/)
 
@@ -10,6 +10,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Languages & Techniques
 - Images
 - Possible Improvements
+
+## Intro
+
+This project represent content from projects 10-11 with React in Practicum.
 
 ## Languages & Techniques
 
