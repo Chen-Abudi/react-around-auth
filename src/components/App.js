@@ -12,13 +12,15 @@ import AddPlacePopup from "./AddPlacePopup";
 import RemovePlacePopup from "./RemovePlacePopup";
 
 import ProtectedRoute from "./ProtectedRoute";
-import Register from "./Register";
-import Login from "./Login";
+// import Register from "./Register";
+// import Login from "./Login";
 import InfoToolTip from "./InfoToolTip";
 import Error from "./Error";
 
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import AuthForm from "./AuthForm";
+import Login from "./AuthForm";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -190,7 +192,11 @@ function App() {
       <Switch>
         <Route path="/signin">
           <Header loggedIn={loggedIn} path="/signup" navText="Sign Up" />
-          <Login />
+          {/* <Login  /> */}
+          <AuthForm
+            role="login"
+            handleSubmit={() => console.log("submitting login")}
+          />
           <InfoToolTip
             isOpen={isInfoToolTipOpen}
             isSuccess={isSuccess}
@@ -199,8 +205,12 @@ function App() {
           />
         </Route>
         <Route path="/signup">
-          <Header />
-          <Register />
+          <Header loggedIn={loggedIn} path="/signin" navText="Log in" />
+          {/* <Register /> */}
+          <AuthForm
+            role="register"
+            handleSubmit={() => console.log("submitting register")}
+          />
         </Route>
         <ProtectedRoute exact path="/" loggedIn={loggedIn}>
           <Header loggedIn={loggedIn} path="/signin" navText="Log Out" />
