@@ -15,6 +15,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
 import Login from "./Login";
 import InfoToolTip from "./InfoToolTip";
+import Error from "./Error";
 
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -33,6 +34,7 @@ function App() {
   const [selectedCardToRemove, setSelectedCardToRemove] = useState();
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialcards()])
@@ -182,52 +184,68 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <Main
-        onEditProfileClick={handleEditProfileClick}
-        onAddPlaceClick={handleAddPlaceClick}
-        onEditAvatarClick={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        onCardLike={handleCardLike}
-        onCardDelete={handleRemovePlaceClick}
-        cards={cards}
-      />
-      <Footer />
+      <Switch>
+        <Route path="/signin">
+          <Header />
+          <Login />
+        </Route>
+        <Route path="/signup">
+          <Header />
+          <Register />
+        </Route>
+        <ProtectedRoute exact path="/" loggedIn={loggedIn}>
+          <Header />
+          <Main
+            onEditProfileClick={handleEditProfileClick}
+            onAddPlaceClick={handleAddPlaceClick}
+            onEditAvatarClick={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleRemovePlaceClick}
+            cards={cards}
+          />
+          <Footer />
 
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        isLoading={isLoading}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-      />
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            isLoading={isLoading}
+            onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
+          />
 
-      <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        isLoading={isLoading}
-        onClose={closeAllPopups}
-        onAddPlace={handleAddPlaceSubmit}
-      />
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            isLoading={isLoading}
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
+          />
 
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        isLoading={isLoading}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-      />
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            isLoading={isLoading}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+          />
 
-      <RemovePlacePopup
-        isOpen={isRemovePlacePopupOpen}
-        isLoading={isLoading}
-        onClose={closeAllPopups}
-        onCardDelete={handleCardDelete}
-        card={selectedCardToRemove}
-      />
+          <RemovePlacePopup
+            isOpen={isRemovePlacePopupOpen}
+            isLoading={isLoading}
+            onClose={closeAllPopups}
+            onCardDelete={handleCardDelete}
+            card={selectedCardToRemove}
+          />
 
-      <ImagePopup
-        card={selectedCard}
-        isOpen={isImageExhibitPopupOpen}
-        onClose={closeAllPopups}
-      />
+          <ImagePopup
+            card={selectedCard}
+            isOpen={isImageExhibitPopupOpen}
+            onClose={closeAllPopups}
+          />
+        </ProtectedRoute>
+        <Route path="/">
+          <Header />
+          <Error />
+        </Route>
+      </Switch>
     </CurrentUserContext.Provider>
   );
 }

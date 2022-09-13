@@ -1,0 +1,14 @@
+.error {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 27px;
+}
+
+.error__title {
+  text-align: center;
+  box-sizing: border-box;
+  width: 70%;
+}
