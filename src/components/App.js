@@ -25,6 +25,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImageExhibitPopupOpen, setIsImageExhibitPopupOpen] = useState(false);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
   const [isRemovePlacePopupOpen, setIsRemovePlacePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState({
@@ -35,6 +36,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialcards()])
@@ -180,21 +182,28 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImageExhibitPopupOpen(false);
     setIsRemovePlacePopupOpen(false);
+    setIsInfoToolTipOpen(false);
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
         <Route path="/signin">
-          <Header />
+          <Header loggedIn={loggedIn} path="/signup" navText="Sign Up" />
           <Login />
+          <InfoToolTip
+            isOpen={isInfoToolTipOpen}
+            isSuccess={isSuccess}
+            onClose={closeAllPopups}
+            action={"logged in"}
+          />
         </Route>
         <Route path="/signup">
           <Header />
           <Register />
         </Route>
         <ProtectedRoute exact path="/" loggedIn={loggedIn}>
-          <Header />
+          <Header loggedIn={loggedIn} path="/signin" navText="Log Out" />
           <Main
             onEditProfileClick={handleEditProfileClick}
             onAddPlaceClick={handleAddPlaceClick}
