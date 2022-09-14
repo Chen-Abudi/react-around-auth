@@ -2,7 +2,7 @@ import React from "react";
 import successfulImage from "../images/successful.svg";
 import failImage from "../images/fail.svg";
 
-function InfoToolTip({ name, isOpen, onClose, isSuccess, action }) {
+function InfoToolTip({ isOpen, onClose, isSuccess, action }) {
   return (
     <div className={`popup popup_role_tooltip ${isOpen && "popup_receptive"}`}>
       <div className="popup__overlay popup__overlay_type_success">
@@ -18,7 +18,7 @@ function InfoToolTip({ name, isOpen, onClose, isSuccess, action }) {
         </p>
         <button
           type="button"
-          className={`popup__close-button popup__close_role_${name}`}
+          className="popup__close-button popup__close_role_tooltip"
           onClick={onClose}
         ></button>
       </div>

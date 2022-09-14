@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -19,26 +19,57 @@ import Error from "./Error";
 
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { register, login, checkToken } from "../utils/auth";
 import AuthForm from "./AuthForm";
-import Login from "./AuthForm";
+import AuthorizationRoute from "./AuthorizationRoute";
 
 function App() {
+  // Popup windows States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImageExhibitPopupOpen, setIsImageExhibitPopupOpen] = useState(false);
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
   const [isRemovePlacePopupOpen, setIsRemovePlacePopupOpen] = useState(false);
+
+  // UX States
+  const [isToolTipActionText, setIsToolTipActionText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Cards States
   const [selectedCard, setSelectedCard] = useState({
     name: "",
     link: "",
   });
   const [selectedCardToRemove, setSelectedCardToRemove] = useState();
-  const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+
+  // User States
+  const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState("");
+
   const [loggedIn, setLoggedIn] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(true);
+  // const [isSuccess, setIsSuccess] = useState(true);
+
+  const history = useHistory();
+
+  // const memorizedEscape = useCallback(
+  //   (evt) => {
+  //     handleEscapeClose(evt);
+  //   },
+  //   [handleEscapeClose]
+  // );
+
+  useEffect(() => {
+    checkToken()
+      .then((res) => {
+        setUserEmail(res.data.email);
+      })
+      .catch((err) => {
+        handleLogout();
+        history.push("./signin");
+      });
+  }, [history, loggedIn]);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialcards()])
@@ -73,11 +104,13 @@ function App() {
     ) {
       document.addEventListener("mousedown", handleOverlayClose);
       document.addEventListener("keydown", handleEscapeClose);
+      // document.addEventListener("keydown", memorizedEscape);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleOverlayClose);
       document.removeEventListener("keydown", handleEscapeClose);
+      // document.removeEventListener("keydown", memorizedEscape);
     };
   }, [
     isEditProfilePopupOpen,
@@ -86,6 +119,12 @@ function App() {
     isImageExhibitPopupOpen,
     isRemovePlacePopupOpen,
   ]);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    console.log("Logging out!");
+  }
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
@@ -190,30 +229,54 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
-        <Route path="/signin">
-          <Header loggedIn={loggedIn} path="/signup" navText="Sign Up" />
+        <AuthorizationRoute path="/signin" loggedIn={loggedIn}>
+          <Header
+            loggedIn={loggedIn}
+            path="/signup"
+            navText="Sign Up"
+            userEmail={userEmail}
+          />
           {/* <Login  /> */}
           <AuthForm
             role="login"
-            handleSubmit={() => console.log("submitting login")}
+            handleAuth={login}
+            setLoggedIn={setLoggedIn}
+            closeAllPopups={closeAllPopups}
+            isToolTipOpen={isInfoToolTipOpen}
+            setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+            isToolTipActionText={isToolTipActionText}
+            setIsToolTipActionText={setIsToolTipActionText}
+            // handleSubmit={() => console.log("submitting login")}
           />
-          <InfoToolTip
-            isOpen={isInfoToolTipOpen}
-            isSuccess={isSuccess}
-            onClose={closeAllPopups}
-            action={"logged in"}
+        </AuthorizationRoute>
+        <AuthorizationRoute path="/signup" loggedIn={loggedIn}>
+          <Header
+            loggedIn={loggedIn}
+            path="/signin"
+            navText="Log in"
+            userEmail={userEmail}
           />
-        </Route>
-        <Route path="/signup">
-          <Header loggedIn={loggedIn} path="/signin" navText="Log in" />
           {/* <Register /> */}
           <AuthForm
             role="register"
-            handleSubmit={() => console.log("submitting register")}
+            handleAuth={register}
+            setLoggedIn={setLoggedIn}
+            closeAllPopups={closeAllPopups}
+            isToolTipOpen={isInfoToolTipOpen}
+            setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+            isToolTipActionText={isToolTipActionText}
+            setIsToolTipActionText={setIsToolTipActionText}
+            // handleSubmit={() => console.log("submitting register")}
           />
-        </Route>
+        </AuthorizationRoute>
         <ProtectedRoute exact path="/" loggedIn={loggedIn}>
-          <Header loggedIn={loggedIn} path="/signin" navText="Log Out" />
+          <Header
+            loggedIn={loggedIn}
+            path="/signin"
+            navText="Log Out"
+            handleLogout={handleLogout}
+            userEmail={userEmail}
+          />
           <Main
             onEditProfileClick={handleEditProfileClick}
             onAddPlaceClick={handleAddPlaceClick}
@@ -258,6 +321,12 @@ function App() {
             card={selectedCard}
             isOpen={isImageExhibitPopupOpen}
             onClose={closeAllPopups}
+          />
+          <InfoToolTip
+            isOpen={isInfoToolTipOpen}
+            onClose={closeAllPopups}
+            isSuccess={true}
+            action={isToolTipActionText}
           />
         </ProtectedRoute>
         <Route path="/">

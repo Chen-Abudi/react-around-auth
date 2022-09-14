@@ -27,6 +27,8 @@
   opacity: 1;
   max-height: 142px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  color: #ffffff;
+  /* filter: blur(0); */
 }
 
 .header__dropdown-email {
@@ -125,7 +127,9 @@
     opacity: 0;
     padding: 0;
     transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out,
-      opacity 0.3s ease-in-out 0.1s;
+      opacity 0.3s ease-in-out 0.1s, color 0.7s ease-in-out;
+    color: #000;
+    /* filter: blur(10px); */
   }
 
   .header__nav-overlay {
