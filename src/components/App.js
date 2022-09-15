@@ -12,15 +12,15 @@ import AddPlacePopup from "./AddPlacePopup";
 import RemovePlacePopup from "./RemovePlacePopup";
 
 import ProtectedRoute from "./ProtectedRoute";
-// import Register from "./Register";
-// import Login from "./Login";
+import Register from "./Register";
+import Login from "./Login";
 import InfoToolTip from "./InfoToolTip";
 import Error from "./Error";
 
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { register, login, checkToken } from "../utils/auth";
-import AuthForm from "./AuthForm";
+// import { register, login, checkToken } from "../utils/auth";
+// import AuthForm from "./AuthForm";
 import AuthorizationRoute from "./AuthorizationRoute";
 
 function App() {
@@ -48,27 +48,24 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [userEmail, setUserEmail] = useState("");
 
-  const [loggedIn, setLoggedIn] = useState(true);
-  // const [isSuccess, setIsSuccess] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const history = useHistory();
 
-  // const memorizedEscape = useCallback(
-  //   (evt) => {
-  //     handleEscapeClose(evt);
-  //   },
-  //   [handleEscapeClose]
-  // );
-
   useEffect(() => {
-    checkToken()
-      .then((res) => {
-        setUserEmail(res.data.email);
-      })
-      .catch((err) => {
-        handleLogout();
-        history.push("./signin");
-      });
+    if (localStorage.getItem("token")) {
+      checkToken()
+        .then((res) => {
+          setUserEmail(res.data.email);
+          setLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error(`Validation error: ${err}`);
+          handleLogout();
+          history.push("/signin");
+        });
+    }
   }, [history, loggedIn]);
 
   useEffect(() => {
@@ -120,10 +117,32 @@ function App() {
     isRemovePlacePopupOpen,
   ]);
 
+  function handleShowTooltip(success, text) {
+    memorizedEscapeClose();
+    memorizedOverlayClose();
+    setIsSuccess(success);
+    setIsToolTipActionText(text);
+    setIsInfoToolTipOpen(true);
+
+    setTimeout(() => {
+      closeAllPopups();
+    }, 2000);
+  }
+
+  const memorizedEscapeClose = useCallback((evt) => {
+    evt.key === "Escape" && closeAllPopups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const memorizedOverlayClose = useCallback((evt) => {
+    evt.target.classList.contains("popup") && closeAllPopups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function handleLogout() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    console.log("Logging out!");
+    setUserEmail("");
   }
 
   function handleCardLike(card) {
@@ -237,15 +256,18 @@ function App() {
             userEmail={userEmail}
           />
           {/* <Login  /> */}
-          <AuthForm
-            role="login"
-            handleAuth={login}
+          <Login
+            // role="login"
+            // handleAuth={login}
             setLoggedIn={setLoggedIn}
             closeAllPopups={closeAllPopups}
             isToolTipOpen={isInfoToolTipOpen}
             setIsInfoToolTipOpen={setIsInfoToolTipOpen}
             isToolTipActionText={isToolTipActionText}
             setIsToolTipActionText={setIsToolTipActionText}
+            handleEscapeClose={memorizedEscapeClose}
+            handleOverlayClose={memorizedOverlayClose}
+            showTooltip={handleShowTooltip}
             // handleSubmit={() => console.log("submitting login")}
           />
         </AuthorizationRoute>
@@ -257,15 +279,18 @@ function App() {
             userEmail={userEmail}
           />
           {/* <Register /> */}
-          <AuthForm
-            role="register"
-            handleAuth={register}
+          <Register
+            // role="register"
+            // handleAuth={register}
             setLoggedIn={setLoggedIn}
             closeAllPopups={closeAllPopups}
             isToolTipOpen={isInfoToolTipOpen}
             setIsInfoToolTipOpen={setIsInfoToolTipOpen}
             isToolTipActionText={isToolTipActionText}
             setIsToolTipActionText={setIsToolTipActionText}
+            handleEscapeClose={memorizedEscapeClose}
+            handleOverlayClose={memorizedOverlayClose}
+            showTooltip={handleShowTooltip}
             // handleSubmit={() => console.log("submitting register")}
           />
         </AuthorizationRoute>
@@ -322,18 +347,18 @@ function App() {
             isOpen={isImageExhibitPopupOpen}
             onClose={closeAllPopups}
           />
-          <InfoToolTip
-            isOpen={isInfoToolTipOpen}
-            onClose={closeAllPopups}
-            isSuccess={true}
-            action={isToolTipActionText}
-          />
         </ProtectedRoute>
-        <Route path="/">
+        <Route>
           <Header />
           <Error />
         </Route>
       </Switch>
+      <InfoToolTip
+        action={isToolTipActionText}
+        isOpen={isInfoToolTipOpen}
+        onClose={closeAllPopups}
+        isSuccess={isSuccess}
+      />
     </CurrentUserContext.Provider>
   );
 }

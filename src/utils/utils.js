@@ -2,7 +2,7 @@ const formText = {
   login: {
     title: "Log in",
     button: "Log in",
-    subtitle: "Not a memver yet? Sign up here!",
+    subtitle: "Not a member yet ? Sign up here!",
     path: "/signup",
   },
   register: {
