@@ -12,6 +12,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import RemovePlacePopup from "./RemovePlacePopup";
 
 import ProtectedRoute from "./ProtectedRoute";
+import { checkToken } from "../utils/auth";
 import Register from "./Register";
 import Login from "./Login";
 import InfoToolTip from "./InfoToolTip";
@@ -20,7 +21,6 @@ import Error from "./Error";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 // import { register, login, checkToken } from "../utils/auth";
-// import AuthForm from "./AuthForm";
 import AuthorizationRoute from "./AuthorizationRoute";
 
 function App() {
@@ -255,20 +255,16 @@ function App() {
             navText="Sign Up"
             userEmail={userEmail}
           />
-          {/* <Login  /> */}
           <Login
-            // role="login"
-            // handleAuth={login}
             setLoggedIn={setLoggedIn}
-            closeAllPopups={closeAllPopups}
-            isToolTipOpen={isInfoToolTipOpen}
-            setIsInfoToolTipOpen={setIsInfoToolTipOpen}
-            isToolTipActionText={isToolTipActionText}
-            setIsToolTipActionText={setIsToolTipActionText}
-            handleEscapeClose={memorizedEscapeClose}
-            handleOverlayClose={memorizedOverlayClose}
+            // closeAllPopups={closeAllPopups}
+            // isToolTipOpen={isInfoToolTipOpen}
+            // setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+            // isToolTipActionText={isToolTipActionText}
+            // setIsToolTipActionText={setIsToolTipActionText}
+            // handleEscapeClose={memorizedEscapeClose}
+            // handleOverlayClose={memorizedOverlayClose}
             showTooltip={handleShowTooltip}
-            // handleSubmit={() => console.log("submitting login")}
           />
         </AuthorizationRoute>
         <AuthorizationRoute path="/signup" loggedIn={loggedIn}>
@@ -278,20 +274,17 @@ function App() {
             navText="Log in"
             userEmail={userEmail}
           />
-          {/* <Register /> */}
+
           <Register
-            // role="register"
-            // handleAuth={register}
             setLoggedIn={setLoggedIn}
-            closeAllPopups={closeAllPopups}
-            isToolTipOpen={isInfoToolTipOpen}
-            setIsInfoToolTipOpen={setIsInfoToolTipOpen}
-            isToolTipActionText={isToolTipActionText}
-            setIsToolTipActionText={setIsToolTipActionText}
-            handleEscapeClose={memorizedEscapeClose}
-            handleOverlayClose={memorizedOverlayClose}
+            // closeAllPopups={closeAllPopups}
+            // isToolTipOpen={isInfoToolTipOpen}
+            // setIsInfoToolTipOpen={setIsInfoToolTipOpen}
+            // isToolTipActionText={isToolTipActionText}
+            // setIsToolTipActionText={setIsToolTipActionText}
+            // handleEscapeClose={memorizedEscapeClose}
+            // handleOverlayClose={memorizedOverlayClose}
             showTooltip={handleShowTooltip}
-            // handleSubmit={() => console.log("submitting register")}
           />
         </AuthorizationRoute>
         <ProtectedRoute exact path="/" loggedIn={loggedIn}>

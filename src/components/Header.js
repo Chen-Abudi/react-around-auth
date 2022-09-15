@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  // const email = "cheezumcali23@gmail.com";
 
   function toggleHamburger() {
     setIsHamburgerOpen(!isHamburgerOpen);

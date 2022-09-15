@@ -23,6 +23,7 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 28px;
+  color: #ffffff;
 }
 
 .auth__input-overlay {
@@ -47,7 +48,7 @@
   border: none;
   padding: 6px 0 6px 4px;
   color: #ffffff;
-  outline: #cccccc;
+  outline: 2px solid #cccccc;
 }
 
 .auth__input:last-of-type {

@@ -1,12 +1,5 @@
 const BASE_URL = "https://register.nomoreparties.co";
 
-// function processResponse(res) {
-//   if (res.ok) {
-//     return res.json();
-//   } else {
-//     return Promise.reject(`An error just occurred: ${res.status}`);
-//   }
-// }
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -18,13 +11,13 @@ export const register = (email, password) => {
       email: email,
       password: password,
     }),
-  }).then((response) => {
-    if (response.status === 201) {
-      return response.json();
+  }).then((res) => {
+    if (res.status === 201) {
+      return res.json();
     }
-    if (response.status === 400) {
+    if (res.status === 400) {
       throw new Error(
-        "One of the fields was filled in incorrectly or a user with this email exist already"
+        "One of the fields was filled in incorrectly or a user with this email existing already"
       );
     }
   });
@@ -83,26 +76,3 @@ export const checkToken = () => {
   });
   // .catch((err) => console.error(err));
 };
-
-// export const checkToken = (jwt) => {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${jwt}`,
-//     },
-//   })
-//     .then((res) => {
-//       if (res.status === 200 || res.status === 201) {
-//         return res.json();
-//       }
-//       if (res.status === 400) {
-//         throw new Error("Token not provided or provided in the wrong format");
-//       }
-//       if (res.status === 401) {
-//         throw new Error("The provided token is invalid");
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// };
