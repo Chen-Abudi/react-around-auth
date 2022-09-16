@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function AuthForm({
@@ -14,17 +14,15 @@ function AuthForm({
   handleFormSubmit,
   isLoggedIn,
 }) {
-  // const [isSuccess, setIsSuccess] = useState(true);
-  // const [isToolTipActionText, setIsToolTipActionText] = useState("");
+  const [isSuccess, setIsSuccess] = useState(true);
+  const [isToolTipActionText, setIsToolTipActionText] = useState("");
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
 
-  // function handleShowTooltip(success, text) {
-  //   setIsSuccess(success);
-  //   setIsToolTipActionText(text);
-  //   // updateInfoTooltipState(true);
-  //   setTimeout(() => {
-  //     closeAllTooltips();
-  //   }, 2000);
-  // }
+  function handleShowTooltip(success, text) {
+    setIsSuccess(success);
+    setIsToolTipActionText(text);
+    setIsInfoToolTipOpen(true);
+  }
 
   return (
     <div className="auth">

@@ -18,33 +18,20 @@ function App() {
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [accountData, setAccountData] = useState({ _id: "", email: "" });
+  // const [accountData, setAccountData] = useState({ _id: "", email: "" });
+
+  const [accountData, setAccountData] = useState({
+    email: "someemail@mail.com",
+  });
 
   // const [isSuccess, setIsSuccess] = useState(true);
   // const [isToolTipActionText, setIsToolTipActionText] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [isTooltipSuccessOpen, setIsTooltipSuccessOpen] = useState(false);
   const [isTooltipFailOpen, setIsTooltipFailOpen] = useState(false);
   const [isTooltipInvalidOpen, setIsTooltipInvalidOpen] = useState(false);
-
-  const closeAllTooltips = () => {
-    setIsTooltipInvalidOpen(false);
-    setIsTooltipSuccessOpen(false);
-    setIsTooltipFailOpen(false);
-  };
-
-  const closeOnEscape = (evt) => {
-    if (evt.key === "Escape") {
-      closeAllTooltips();
-    }
-  };
-
-  const setListener = (listen) => {
-    listen
-      ? document.addEventListener("keydown", closeOnEscape)
-      : document.removeEventListener("keydown", closeOnEscape);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,9 +53,28 @@ function App() {
     }
   }, [history]);
 
+  const closeAllTooltips = () => {
+    setIsTooltipInvalidOpen(false);
+    setIsTooltipSuccessOpen(false);
+    setIsTooltipFailOpen(false);
+  };
+
+  const closeOnEscape = (evt) => {
+    if (evt.key === "Escape") {
+      closeAllTooltips();
+    }
+  };
+
+  const setListener = (listen) => {
+    listen
+      ? document.addEventListener("keydown", closeOnEscape)
+      : document.removeEventListener("keydown", closeOnEscape);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    // history.push("/signin");
   };
 
   const login = (userData) => {
@@ -110,6 +116,7 @@ function App() {
         setIsLoading(false);
       });
   }
+
   // useEffect(() => {
   //   function closeFromOverlay(evt) {
   //     if (evt.target.classList.contains("tooltip")) {
@@ -137,7 +144,7 @@ function App() {
   return (
     <AccountContext.Provider value={{ loggedIn, accountData }}>
       <div className="container">
-        <Header handleLogout={handleLogout} />
+        <Header handleLogout={handleLogout} loggedIn={loggedIn} />
 
         <Switch>
           <ProtectedRoute exact path="/" component={AroundUS} />
