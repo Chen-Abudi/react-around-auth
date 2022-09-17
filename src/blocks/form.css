@@ -76,6 +76,10 @@
   cursor: default;
 }
 
+.form__button_type_tooltip {
+  display: none;
+}
+
 .form__button_type_remove-postcard {
   padding: 14px 124px;
   line-height: 21.78px;

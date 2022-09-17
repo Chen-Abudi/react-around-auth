@@ -28,6 +28,7 @@
 @media screen and (max-width: 619px) {
   .footer__copyrights {
     min-width: 282px;
+    text-align: center;
   }
 }
 

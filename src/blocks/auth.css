@@ -73,8 +73,13 @@
   color: #000;
   font-size: 18px;
   line-height: 24px;
-  cursor: pointer;
   display: block;
+  transition: opacity 0.4s linear;
+}
+
+.auth__button:hover {
+  opacity: 0.6;
+  cursor: url("../images/pointer.svg"), pointer;
 }
 
 .auth__footer-subtitle {
@@ -195,7 +200,7 @@
 
   .auth__title {
     margin: 0 0 40px;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 24px;
   }
 
@@ -205,6 +210,12 @@
 
   .auth__button {
     margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 425px) and (max-width: 619px) {
+  .auth__form {
+    width: 400px;
   }
 }
 

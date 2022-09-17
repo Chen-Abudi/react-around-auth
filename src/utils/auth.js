@@ -32,30 +32,29 @@ export const login = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
-      password: password,
+      email,
+      password,
     }),
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      }
-      if (res.status === 400) {
-        throw new Error("One or more of the fields were not provided");
-      }
-      if (res.status === 401) {
-        throw new Error("The user with the specified email not found");
-      }
-    })
-    .then((res) => {
-      localStorage.setItem("token", res.token);
-      return res;
-    });
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    if (res.status === 400) {
+      throw new Error("One or more of the fields were not provided");
+    }
+    if (res.status === 401) {
+      throw new Error("The user with the specified email not found");
+    }
+  });
+  // .then((res) => {
+  //   localStorage.setItem("token", res.token);
+  //   return res;
+  // });
   // .catch((err) => console.error(err));
 };
 
-export const checkToken = () => {
-  const token = localStorage.getItem("token");
+export const checkToken = (token) => {
+  // const token = localStorage.getItem("token");
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {

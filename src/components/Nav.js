@@ -47,13 +47,13 @@ function Nav({
       {!isRegister && !isLogin && (
         <button
           type="button"
-          className="header__menu-button"
+          className="header__dropdown-button"
           onClick={toggleHamburger}
         >
           {!isHamburgerOpen ? (
             <img
               src={hamburgerOpen}
-              alt="menu"
+              alt="Dropdown menu"
               className="header__hamburger-icon"
             />
           ) : (

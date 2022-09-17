@@ -8,6 +8,7 @@ function PopupWithForm({
   children,
   buttonText,
   onSubmit,
+  isTooltipOpen,
 }) {
   const formRef = useRef();
   const [isFormValids, setIsFormValids] = useState(false);
@@ -24,14 +25,17 @@ function PopupWithForm({
     <div
       className={`popup popup_type_${name} ${isOpen ? "popup_receptive" : ""}`}
     >
-      <div className="popup__overlay">
+      {/* <div className="popup__overlay"> */}
+      <div className={`popup__overlay popup__overlay_type_${name}`}>
         <button
-          className="popup__close-button"
+          // className="popup__close-button"
+          className={`popup__close-button popup__close-button_type_${name}`}
           type="button"
           aria-label="close-delete-modal"
           onClick={onClose}
         />
-        <h2 className="popup__title">{title}</h2>
+        {/* <h2 className="popup__title">{title}</h2> */}
+        <h2 className={`popup__title popup__title_type_${name}`}>{title}</h2>
         <form
           action="#"
           className="form popup__form"
@@ -42,6 +46,21 @@ function PopupWithForm({
           noValidate
         >
           {children}
+
+          {!isTooltipOpen && (
+            <fieldset className="form__fieldset">
+              <button
+                className={`form__button ${
+                  !isFormValids && `form__button_disabled`
+                } form__button_type_${name}`}
+                type="submit"
+              >
+                {buttonText}
+              </button>
+            </fieldset>
+          )}
+          {/* 
+
           <fieldset className="form__fieldset">
             <button
               className={`form__button ${
@@ -52,7 +71,7 @@ function PopupWithForm({
             >
               {buttonText}
             </button>
-          </fieldset>
+          </fieldset> */}
         </form>
       </div>
     </div>

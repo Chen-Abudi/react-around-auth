@@ -46,10 +46,10 @@ function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
     }
   }, [loggedIn]);
 
-  //   function handleLogoutFromDropdown() {
-  //     toggleHamburger();
-  //     handleLogout();
-  //   }
+  // function handleLogoutFromDropdown() {
+  //   toggleHamburger();
+  //   handleLogout();
+  // }
   return (
     //     <>
     //       {loggedIn && (
@@ -68,7 +68,7 @@ function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
     //           </Link>
     //         </div>
     //       )}
-    <header className="header">
+    <header className="header section">
       <MobileDropdown
         isHamburgerOpen={isHamburgerOpen}
         userEmail={userEmail}
@@ -84,6 +84,7 @@ function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
           handleLogout={handleLogout}
         />
       </div>
+      <div className="divider"></div>
       {/* <Link to="/">
              <img className="header__logo" src={logo} alt="Around the U.S Logo" />
          </Link>

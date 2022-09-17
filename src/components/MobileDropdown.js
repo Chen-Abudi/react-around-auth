@@ -8,15 +8,15 @@ function MobileDropdown(props) {
         props.isHamburgerOpen ? "header__mobile-dropdown_receptive" : ""
       } `}
     >
-      <ul className="header__links-items header__links-items_mobile-dropdown">
+      <ul className="header__links header__links_mobile-dropdown">
         <li className="header__links-item">{props.userEmail}</li>
         <li className="header__links-item">
           <Link
             className="header__link"
             to="/signin"
-            onClick={props.handleLogoutFromDropdown}
+            onClick={props.handleLogout}
           >
-            {props.navText}
+            Log out
           </Link>
         </li>
       </ul>

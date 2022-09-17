@@ -15,6 +15,10 @@
   /* backdrop-filter: blur(2px); */
 }
 
+.popup_type_tooltip {
+  text-align: center;
+}
+
 .popup_receptive {
   visibility: visible;
   opacity: 1;
@@ -64,11 +68,21 @@
   margin: 0;
 }
 
+.popup__title_type_tooltip {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+}
+
 .popup__overlay_type_image-exhibit {
   background-color: transparent;
   color: #ffffff;
   gap: 10px;
   padding: 0;
+}
+
+.popup__overlay_type_tooltip {
+  gap: 0;
 }
 
 .popup__image {
@@ -90,19 +104,19 @@
   padding: 34px 36px 36px 36px;
 }
 
-.popup__overlay_type_success {
+/* .popup__overlay_type_success {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 60px 36px;
-  /* padding: 60px 32px; */
+  
 }
 
 .popup__success {
   width: 120px;
   height: 120px;
   margin-bottom: 32px;
-  /* margin: 60px 155px 32px; */
+  
 }
 
 .popup__message {
@@ -112,7 +126,7 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-}
+} */
 
 @media screen and (max-width: 524px) {
   .popup {
@@ -132,6 +146,13 @@
     right: 7px;
   }
 
+  .popup__close-button_type_tooltip {
+    transform: translate(-10px);
+    width: 30px;
+    left: 50%;
+    top: -65px;
+  }
+
   .popup__title {
     font-size: 18px;
     line-height: 22px;
@@ -141,6 +162,12 @@
     max-width: 75vw;
     gap: 10px;
     padding: 0;
+  }
+
+  .popup__overlay_type_tooltip {
+    gap: 0;
+    padding-top: 50px;
+    max-width: 280px;
   }
 
   .popup__close-button_type_image-ex {
@@ -184,11 +211,19 @@
     margin-top: 0;
     margin-bottom: 13.62px;
   }
+
+  .popup__close-button_type_tooltip {
+    background-size: 35px 35px;
+  }
 }
 
 @media screen and (max-width: 320px) {
   .popup__overlay {
     gap: 76px;
+  }
+
+  .popup__overlay_type_tooltip {
+    gap: 0;
   }
 
   .popup__overlay_type_image-exhibit {

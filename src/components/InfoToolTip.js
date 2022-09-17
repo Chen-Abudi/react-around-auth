@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import successfulIcon from "../images/successful.svg";
 import failIcon from "../images/fail.svg";
 
 function InfoToolTip({ isOpen, onClose, isSuccess, action }) {
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     const clock = setTimeout(() => {
-  //       onClose();
-  //     }, 2000);
-  //     return () => clearTimeout(clock);
-  //   }
-  // });
+  useEffect(() => {
+    if (isOpen) {
+      const clock = setTimeout(() => {
+        onClose();
+      }, 2000);
+      return () => clearTimeout(clock);
+    }
+  });
 
   return (
     <PopupWithForm

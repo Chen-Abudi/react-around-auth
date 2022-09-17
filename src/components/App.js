@@ -18,16 +18,10 @@ function App() {
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [accountData, setAccountData] = useState({ _id: "", email: "" });
 
   const [accountData, setAccountData] = useState({
-    email: "someemail@mail.com",
+    email: "email@mail.com",
   });
-
-  // const [isSuccess, setIsSuccess] = useState(true);
-  // const [isToolTipActionText, setIsToolTipActionText] = useState("");
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const [isTooltipSuccessOpen, setIsTooltipSuccessOpen] = useState(false);
   const [isTooltipFailOpen, setIsTooltipFailOpen] = useState(false);
@@ -40,9 +34,10 @@ function App() {
       auth
         .checkToken(token)
         .then((res) => {
-          if (res) {
+          if (res.data._id) {
             setLoggedIn(true);
-            setAccountData(res.data);
+            // setAccountData(res.data);
+            setAccountData({ email: res.data.email });
             history.push("/");
           }
         })
@@ -51,7 +46,7 @@ function App() {
           history.push("/signin");
         });
     }
-  }, [history]);
+  }, [history, loggedIn]);
 
   const closeAllTooltips = () => {
     setIsTooltipInvalidOpen(false);
@@ -74,87 +69,78 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    // history.push("/signin");
+    history.push("/signin");
   };
 
-  const login = (userData) => {
-    setLoggedIn(true);
-    setAccountData(userData);
-    history.push("/");
-  };
-
-  function handleRegister(credentials) {
-    setIsLoading(true);
+  function handleRegister({ email, password }) {
     auth
-      .register(credentials)
+      .register(email, password)
       .then((res) => {
-        setIsTooltipSuccessOpen(true);
-        login(res.data);
+        if (res.data._id) {
+          setIsTooltipSuccessOpen(true);
+          history.push("signin");
+        } else {
+          setIsTooltipFailOpen(true);
+        }
       })
       .catch((err) => {
         console.log(err);
         setIsTooltipFailOpen(true);
-      })
-      .finally(() => {
-        setListener(true);
-        setIsLoading(false);
       });
   }
 
-  function handleLogin(credentials) {
-    setIsLoading(true);
+  function handleLogin({ email, password }) {
     auth
-      .login(credentials)
+      .login(email, password)
       .then((res) => {
-        login(res.data);
-        setIsLoading(false);
+        if (res.token) {
+          setLoggedIn(true);
+          setAccountData({ email });
+          localStorage.setItem("token", res.token);
+          history.push("/");
+        }
       })
       .catch((err) => {
         console.log(err);
         setIsTooltipInvalidOpen(true);
         setListener(true);
-        setIsLoading(false);
       });
   }
 
-  // useEffect(() => {
-  //   function closeFromOverlay(evt) {
-  //     if (evt.target.classList.contains("tooltip")) {
-  //       closeAllTooltips();
-  //     }
-  //   }
+  const [isSuccess, setIsSuccess] = useState(true);
 
-  //   function closeOnEscape(evt) {
-  //     if (evt.key === "Escape") {
-  //       closeAllTooltips();
-  //     }
-  //   }
-
-  //   if ([isTooltipInvalidOpen, isTooltipSuccessOpen, isTooltipFailOpen]) {
-  //     document.addEventListener("mousedown", closeFromOverlay);
-  //     document.addEventListener("keydown", closeOnEscape);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", closeFromOverlay);
-  //     document.removeEventListener("keydown", closeOnEscape);
-  //   };
-  // }, [isTooltipInvalidOpen, isTooltipSuccessOpen, isTooltipFailOpen]);
+  function handleShowTooltip(success, text) {
+    setIsSuccess(success);
+    setIsTooltipInvalidOpen(text);
+    setIsTooltipInvalidOpen(true);
+  }
 
   return (
     <AccountContext.Provider value={{ loggedIn, accountData }}>
       <div className="container">
-        <Header handleLogout={handleLogout} loggedIn={loggedIn} />
+        <Header
+          handleLogout={handleLogout}
+          loggedIn={loggedIn}
+          email={accountData.email}
+        />
 
         <Switch>
-          <ProtectedRoute exact path="/" component={AroundUS} />
+          <ProtectedRoute
+            exact
+            path="/"
+            component={AroundUS}
+            loggedIn={loggedIn}
+          />
 
           <Route path="/signin">
-            <Login handleLogin={handleLogin} isLoading={isLoading} />
+            <Login handleLogin={handleLogin} showTooltip={handleShowTooltip} />
           </Route>
 
           <Route path="/signup">
-            <Register handleRegister={handleRegister} isLoading={isLoading} />
+            <Register
+              handleRegister={handleRegister}
+              showTooltip={handleShowTooltip}
+            />
           </Route>
 
           <Route>
@@ -164,6 +150,7 @@ function App() {
 
         <InfoToolTip
           type="success"
+          isSuccess={isSuccess}
           isOpen={isTooltipSuccessOpen}
           onClose={closeAllTooltips}
         >
@@ -172,6 +159,7 @@ function App() {
 
         <InfoToolTip
           type="error"
+          isSuccess={isSuccess}
           isOpen={isTooltipFailOpen}
           onClose={closeAllTooltips}
         >
@@ -180,18 +168,12 @@ function App() {
 
         <InfoToolTip
           type="error"
+          isSuccess={isSuccess}
           isOpen={isTooltipInvalidOpen}
           onClose={closeAllTooltips}
         >
           Oops, your email or password was incorrect! Please try again.
         </InfoToolTip>
-
-        {/* <InfoToolTip
-          action={isToolTipActionText}
-          isOpen={isTooltipInvalidOpen}
-          onClose={closeAllTooltips}
-          isSuccess={isSuccess}
-        /> */}
 
         <Footer />
       </div>

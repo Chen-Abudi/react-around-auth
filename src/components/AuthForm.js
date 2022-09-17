@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function AuthForm({
@@ -12,18 +12,7 @@ function AuthForm({
   setPassword,
   formRef,
   handleFormSubmit,
-  isLoggedIn,
 }) {
-  const [isSuccess, setIsSuccess] = useState(true);
-  const [isToolTipActionText, setIsToolTipActionText] = useState("");
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
-
-  function handleShowTooltip(success, text) {
-    setIsSuccess(success);
-    setIsToolTipActionText(text);
-    setIsInfoToolTipOpen(true);
-  }
-
   return (
     <div className="auth">
       <h1 className="auth__title">{title}</h1>
