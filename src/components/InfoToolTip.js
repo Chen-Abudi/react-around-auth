@@ -1,34 +1,75 @@
-import React, { useEffect } from "react";
+// import React from "react";
+// import PopupWithForm from "./PopupWithForm";
+// import successfulIcon from "../images/successful.svg";
+// import failIcon from "../images/fail.svg";
+
+// function InfoToolTip({ isOpen, onClose, isSuccess }) {
+//   // useEffect(() => {
+//   //   if (isOpen) {
+//   //     const clock = setTimeout(() => {
+//   //       onClose();
+//   //     }, 2000);
+//   //     return () => clearTimeout(clock);
+//   //   }
+//   // });
+
+//   return (
+//     <PopupWithForm
+//       isOpen={isOpen}
+//       onClose={onClose}
+//       // className="tooltip"
+//       name="tooltip"
+//       // title=""
+//     >
+//       <img
+//         className="tooltip__icon"
+//         src={isSuccess ? successfulIcon : failIcon}
+//         alt="Tooltip Icon States"
+//       />
+//       <p className="tooltip__message">
+//         {isSuccess
+//           ? `Success! You have now been registered.`
+//           : `Oops, something went wrong! Please try again.`}
+//       </p>
+//     </PopupWithForm>
+//   );
+// }
+
+// export default InfoToolTip;
+
+import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import successfulIcon from "../images/successful.svg";
 import failIcon from "../images/fail.svg";
 
-function InfoToolTip({ isOpen, onClose, isSuccess, action }) {
-  useEffect(() => {
-    if (isOpen) {
-      const clock = setTimeout(() => {
-        onClose();
-      }, 2000);
-      return () => clearTimeout(clock);
-    }
-  });
+function InfoToolTip({ isOpen, onClose, action }) {
+  const success = action === "successful";
+
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     const clock = setTimeout(() => {
+  //       onClose();
+  //     }, 2000);
+  //     return () => clearTimeout(clock);
+  //   }
+  // });
 
   return (
     <PopupWithForm
       isOpen={isOpen}
       onClose={onClose}
-      className="tooltip"
+      // className="tooltip"
       name="tooltip"
-      title=""
+      // title=""
     >
       <img
         className="tooltip__icon"
-        src={isSuccess ? successfulIcon : failIcon}
-        alt="Tooltip Icon States"
+        src={success ? successfulIcon : failIcon}
+        alt={`${success ? "successful" : "unsuccessful"} attempt`}
       />
       <p className="tooltip__message">
-        {isSuccess
-          ? `Success! You have now been ${action}.`
+        {success
+          ? `Success! You have now been registered.`
           : `Oops, something went wrong! Please try again.`}
       </p>
     </PopupWithForm>

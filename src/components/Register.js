@@ -1,105 +1,139 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+// import React, { useRef, useState } from "react";
+// import { useHistory } from "react-router-dom";
+// import AuthForm from "./AuthForm";
+// import { register } from "../utils/auth";
 
-// function Register() {
-//   const [values, setValues] = useState({ email: "", password: "" });
+// function Register({ showTooltip }) {
+//   const history = useHistory();
 
-//   function handleChange(evt) {
-//     const name = evt.target.name.split("-").pop();
-//     setValues({ ...values, [name]: evt.target.value });
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+
+//   const authForm = useRef();
+
+//   function handleFormSubmit(evt) {
+//     evt.preventDefault();
+//     // If form is invalid then prevent it submittion
+//     if (!authForm.current.checkValidity()) {
+//       authForm.current.reportValidity();
+//       return;
+//     }
+
+//     register(email, password)
+//       .then((res) => {
+//         if (res) {
+//           showTooltip(true, "registered");
+//           setEmail("");
+//           setPassword("");
+//           history.push("/signin");
+//         } else {
+//           // Tooltip for failure is shown
+//           showTooltip(false, "");
+//         }
+//       })
+//       .catch((err) => {
+//         showTooltip(false, "");
+//       });
+//     // .catch((err) => console.log(err));
 //   }
 
 //   return (
-//     <form className="form" name="form-register">
-//       <h2 className="form__title">Sign up</h2>
-//       <input
-//         onChange={handleChange}
-//         name="email-signup"
-//         id="email-signup"
-//         className="form__input"
-//         aria-label="Email"
-//         placeholder="Email"
-//         type="email"
-//         minLength="5"
-//         maxLength="320"
-//         required
-//       />
-//       <input
-//         onChange={handleChange}
-//         name="password-login"
-//         id="password-login"
-//         className="form__input"
-//         aria-label="Password"
-//         placeholder="Password"
-//         type="password"
-//         minLength="10"
-//         maxLength="256"
-//         required
-//       />
-//       <button className="form__button" type="submit" name="submit-login">
-//         Sign up
-//       </button>
-//       <Link to="/signin" className="form__text link">
-//         Already a member? Log in here!
-//       </Link>
-//     </form>
+//     <AuthForm
+//       title="Sign up"
+//       button="Sign up"
+//       subtitle="Already a member? Log in here!"
+//       path="/signin"
+//       email={email}
+//       setEmail={setEmail}
+//       password={password}
+//       setPassword={setPassword}
+//       formRef={authForm}
+//       handleFormSubmit={handleFormSubmit}
+//     />
 //   );
 // }
 
 // export default Register;
 
-import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import AuthForm from "./AuthForm";
-import { register } from "../utils/auth";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function Register({ showTooltip }) {
-  const history = useHistory();
+import FieldForm from "./FieldForm";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Register({ handleRegister, isLoading }) {
+  const [values, setValues] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [readyToSubmit, setReadyToSubmit] = useState(false);
 
-  const authForm = useRef();
+  function handleChange(evt) {
+    const name = evt.target.name.split("-").pop();
+    setValues({ ...values, [name]: evt.target.value });
 
-  function handleFormSubmit(evt) {
-    evt.preventDefault();
-    // If form is invalid then prevent it submittion
-    if (!authForm.current.checkValidity()) {
-      authForm.current.reportValidity();
-      return;
+    if (evt.target.validity.valid) {
+      const errorsUpdated = { ...errors, [name]: "" };
+      setErrors(errorsUpdated);
+      const errorsValue = Object.values(errorsUpdated);
+
+      if (errorsValue.length === 2)
+        setReadyToSubmit(!errorsValue.some((i) => i));
+      // If both fields were checked and there is no error, enable submitting
+    } else {
+      setErrors({ ...errors, [name]: evt.target.validationMessage });
+      setReadyToSubmit(false);
     }
+  }
 
-    register(email, password)
-      .then((res) => {
-        if (res) {
-          showTooltip(true, "registered");
-          setEmail("");
-          setPassword("");
-          history.push("/signin");
-        } else {
-          // Tooltip for failure is shown
-          showTooltip(false, "");
-        }
-      })
-      .catch((err) => {
-        showTooltip(false, "");
-      });
-    // .catch((err) => console.log(err));
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleRegister(values);
   }
 
   return (
-    <AuthForm
-      title="Sign up"
-      button="Sign up"
-      subtitle="Already a member? Log in here!"
-      path="/signin"
-      email={email}
-      setEmail={setEmail}
-      password={password}
-      setPassword={setPassword}
-      formRef={authForm}
-      handleFormSubmit={handleFormSubmit}
-    />
+    <div className="auth">
+      <h1 className="auth__title">Sign up</h1>
+      <form className="auth__form" onSubmit={handleSubmit} name="register-form">
+        <FieldForm
+          type="email"
+          name="signup-email"
+          label="Email"
+          minMax={[5, 320]}
+          value={values.email}
+          error={errors.email}
+          handleChange={handleChange}
+        />
+
+        <FieldForm
+          type="password"
+          name="sign-password"
+          label="Password"
+          minMax={[10, 255]}
+          value={values.password}
+          error={errors.password}
+          handleChange={handleChange}
+        />
+
+        <div className="auth__footer">
+          <div className="auth__footer-overlay">
+            <button
+              className={`auth__button ${
+                readyToSubmit ? "" : "form__button_disabled"
+              }`}
+              type="submit"
+              name="login-submit"
+            >
+              {isLoading ? "Loading..." : "Sign up"}
+            </button>
+
+            <p className="auth__footer-subtitle">
+              Already a member?{" "}
+              <Link to="/signin" className="auth__footer-link">
+                Log in here!
+              </Link>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 

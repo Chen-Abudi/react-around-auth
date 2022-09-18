@@ -44,6 +44,16 @@
   list-style: none;
 }
 
+.header__links-item {
+  color: #fff;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  margin: 0;
+  text-align: right;
+}
+
 .header__links_mobile-dropdown {
   width: 100%;
   display: flex;
@@ -83,13 +93,25 @@
 .header__close-icon {
   width: 30px;
   height: 30px;
+  position: relative;
+  right: 8px;
 }
 
-/* @media screen and (max-width: 890px) {
-  .header__logo {
-    margin-left: 38px;
+@media screen and (min-width: 769px) {
+  .header__mobile-dropdown {
+    display: none;
   }
-} */
+
+  .header__link-item {
+    color: #fff;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    margin: 0;
+    text-align: right;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .header__dropdown-button {

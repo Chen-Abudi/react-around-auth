@@ -33,7 +33,7 @@ import Nav from "./Nav";
 // import hamburgerClose from "../images/hamburgerClose.svg";
 // import { Link } from "react-router-dom";
 
-function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
+function Header({ loggedIn, userEmail, navText, handleLogout, path }) {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
 
   function toggleHamburger() {
@@ -51,23 +51,6 @@ function Header({ loggedIn, navText, handleLogout, path, userEmail }) {
   //   handleLogout();
   // }
   return (
-    //     <>
-    //       {loggedIn && (
-    //         <div
-    //           className={`header__dropdown ${
-    //             isHamburgerOpen && "header__dropdown_receptive"
-    //           } `}
-    //         >
-    //           <p className="header__dropdown-email">{userEmail}</p>
-    //           <Link
-    //             className="header__dropdown-link"
-    //             to={path}
-    //             onClick={handleLogoutFromDropdown}
-    //           >
-    //             {navText}
-    //           </Link>
-    //         </div>
-    //       )}
     <header className="header section">
       <MobileDropdown
         isHamburgerOpen={isHamburgerOpen}
