@@ -25,16 +25,14 @@ function PopupWithForm({
     <div
       className={`popup popup_type_${name} ${isOpen ? "popup_receptive" : ""}`}
     >
-      {/* <div className="popup__overlay"> */}
       <div className={`popup__overlay popup__overlay_type_${name}`}>
         <button
-          // className="popup__close-button"
           className={`popup__close-button popup__close-button_type_${name}`}
           type="button"
           aria-label="close-delete-modal"
           onClick={onClose}
         />
-        {/* <h2 className="popup__title">{title}</h2> */}
+
         <h2 className={`popup__title popup__title_type_${name}`}>{title}</h2>
         <form
           action="#"
@@ -59,19 +57,6 @@ function PopupWithForm({
               </button>
             </fieldset>
           )}
-          {/* 
-
-          <fieldset className="form__fieldset">
-            <button
-              className={`form__button ${
-                !isFormValids && `form__button_disabled`
-              }`}
-              type="submit"
-              disabled={!isFormValids}
-            >
-              {buttonText}
-            </button>
-          </fieldset> */}
         </form>
       </div>
     </div>

@@ -1,7 +1,5 @@
 # 🌎 Project 14: Around the U.S Auth (React)
 
-## [Check out React Around the U.S Project!](https://chen-abudi.github.io/around-react/)
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Overview:
@@ -9,39 +7,53 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Intro
 - Languages & Techniques
 - Images
+- Figma Design
 - Possible Improvements
+- Deployed Project
 
 ## Intro
 
-This project represent content from projects 10-11 with React in Practicum.
+This is an responsive web application that showcases a person's travel around the U.S. It has the ability of adding, sharing or even removing photos, liking/disliking, changing profile info and picture with _RESTful API_. An important addition to this incredible application is **Security** for the homepage which includes Identication, Authentication, Authorization.
+
+### 🗝️ This React project is an optimized iteration of a :
+
+### _[Around React](https://chen-abudi.github.io/around-react/)_
+
+### _[Around the U.S](https://chen-abudi.github.io/web_project_4/)_
 
 ## Languages & Techniques
 
 - ReactJS
 - Javascript
-- CSS3
-- React Hooks (useState, useEffect, useRef)
-- React Global State (createContext)
-- React Functional Components
-- Grid, flex, forms, animation
+- Identication, Authentication, Authorization
+- Data manipulation in localStorage.
+- CSS3 - Grid, flex, forms, animation etc.
+- React Hooks, Global State
 - Adaptive layout
 - Flat BEM file structure
-- OOP
-- Webpack, babel, postcss
-- DOM manipulation
+- OOP, DOM manipulation
 - REST API requests
 
 ## Images
 
 - [For more incredible images, feel free to Click Here !](https://unsplash.com/)
 
-### ⚛️ _This React project is an optimized iteration of a [previous project](https://chen-abudi.github.io/web_project_4/)_
+## Figma Design :
 
-Around the U.S. project on React, featuring authorization and registration.
+- [Check this lovely design !](https://www.figma.com/file/yXGGl4EnWYEPzGJU2dSJ1L/Sprint-14%3A-Registration-and-Authorization?node-id=1%3A352)
 
-This repository will contain your own front-end project on React with added authorization and registration features.
-Start working with your previously built front end code from Sprint 11.
+## Possible Improvements
 
-All authorization, registration and token requests must go through to the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+- Optimize it for disable people.
+- Building my own API and connecting it to the server.
+- To show any visitor the relevant content depending of their access.
+- Maximize the security.
+- Optimizie the page speed.
 
-Good luck!
+**All authorization, registration and token requests must go through to the server running on** [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+
+# Deployed Project :
+
+[]()
+
+## Enjoy!

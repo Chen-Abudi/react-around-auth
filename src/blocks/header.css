@@ -11,13 +11,14 @@
 
 .header {
   max-width: 880px;
-  margin: 45px auto 41px;
+  margin: 45px auto 0;
 }
 
 .header__overlay {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 36px;
 }
 
 .header__logo {
@@ -77,24 +78,26 @@
 }
 
 .header__dropdown-button {
-  cursor: pointer;
+  /* cursor: pointer; */
   display: none;
   border: none;
   background-color: transparent;
   width: 24px;
   height: 18px;
   transition: opacity 0.4s linear;
+  padding: 0;
 }
 
-.header__dropdown-button {
+.header__dropdown-button:hover {
   opacity: 0.6;
+  cursor: url("../images/pointer.svg"), pointer;
 }
 
 .header__close-icon {
   width: 30px;
   height: 30px;
   position: relative;
-  right: 8px;
+  right: 2px;
 }
 
 @media screen and (min-width: 769px) {
@@ -134,12 +137,6 @@
   }
 }
 
-/* @media screen and (min-width: 321px) and (max-width: 424px) {
-  .header__overlay {
-    width: 100%;
-  }
-} */
-
 @media screen and (max-width: 320px) {
   .header {
     max-width: 320px;
@@ -149,12 +146,16 @@
   .header__logo {
     max-width: 126px;
     max-height: 24px;
-    margin-bottom: 32px;
-    margin-left: 27px;
+    /* margin-bottom: 32px;
+    margin-left: 27px; */
   }
 
   .header__link {
     font-size: 17px;
     line-height: 17px;
+  }
+
+  .header__close-icon {
+    bottom: 5px;
   }
 }
