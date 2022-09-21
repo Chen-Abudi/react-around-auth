@@ -39,9 +39,7 @@ function App() {
             history.push("/");
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => console.log(err));
     }
   }, [history]);
 
@@ -74,7 +72,7 @@ function App() {
     history.push("/");
   };
 
-  const handleRegister = (credentials) => {
+  function handleRegister(credentials) {
     setIsLoading(true);
     auth
       .register(credentials)
@@ -94,7 +92,7 @@ function App() {
 
         setIsInfoToolTipOpen(true);
       });
-  };
+  }
 
   function handleLogin(credentials) {
     setIsLoading(true);
