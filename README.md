@@ -1,4 +1,4 @@
-# 🌎 Project 14: Around the U.S Auth (React)
+# 🌎 Project 14: React Around Auth
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Intro
 
-This is an responsive web application that showcases a person's travel around the U.S. It has the ability of adding, sharing or even removing photos, liking/disliking, changing profile info and picture with _RESTful API_. An important addition to this incredible application is **Security** for the homepage which includes Identication, Authentication, Authorization.
+This is an responsive web application that showcases a person's travel around the U.S. It has the ability of adding, sharing or even removing photos, liking/disliking, changing profile info and picture with _RESTful API_. An important addition to this incredible application is **Security** for the homepage which includes Identication, Authentication and Authorization.
 
 ### 🗝️ This React project is an optimized iteration of a :
 
@@ -54,6 +54,10 @@ This is an responsive web application that showcases a person's travel around th
 
 # Deployed Project :
 
-[]()
+[React Around Auth](https://chen-abudi.github.io/react-around-auth/)
+
+### **Check out My LinkedIn Profile**
+
+[LinkedIn](https://www.linkedin.com/in/chen-abudi/)
 
 ## Enjoy!
