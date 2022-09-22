@@ -3,12 +3,12 @@ import { Route, Redirect } from "react-router-dom";
 import { AccountContext } from "../contexts/AccountContext";
 
 const ProtectedRoute = ({ component: Component, ...props }) => {
-  const value = useContext(AccountContext);
+  const user = useContext(AccountContext);
 
   return (
     <Route>
       {() =>
-        value.loggedIn === true ? (
+        user.loggedIn === true ? (
           <Component {...props} />
         ) : (
           <Redirect to="/signin" />

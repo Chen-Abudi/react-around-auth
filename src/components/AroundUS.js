@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 
-// import Header from "./Header";
 import Main from "./Main";
-// import Footer from "./Footer";
 
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
@@ -176,7 +173,6 @@ function AroundUS() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      {/* <Header /> */}
       <Main
         onEditProfileClick={handleEditProfileClick}
         onAddPlaceClick={handleAddPlaceClick}
@@ -186,7 +182,6 @@ function AroundUS() {
         onCardDelete={handleRemovePlaceClick}
         cards={cards}
       />
-      {/* <Footer /> */}
 
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}

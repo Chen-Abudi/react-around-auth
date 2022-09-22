@@ -26,6 +26,7 @@ function App() {
   const [isInfoToolTipAction, setIsInfoToolTipAction] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -112,8 +113,6 @@ function App() {
         setIsLoading(false);
       });
   }
-
-  const [isSuccess, setIsSuccess] = useState(true);
 
   function handleShowTooltip(success, text) {
     setIsSuccess(success);
